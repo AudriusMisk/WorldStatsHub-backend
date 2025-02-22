@@ -2,6 +2,8 @@ package lt.ca.javau11.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -25,6 +27,7 @@ public class Country {
     
     private Long population;	  // Extract "population"
     
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "region_id")
     private Region region;        // Extract "region"
