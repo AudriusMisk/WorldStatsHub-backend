@@ -2,6 +2,7 @@ package lt.ca.javau11.entities;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,32 +19,35 @@ public class Country {
 
     private String name;          // Extract "name.common"
     private String officialName;  // Extract "name.official"
-    private String capital;       // Extract "capital[0]"
+    
+    @Column(name = "capital", columnDefinition = "TEXT")
+    private String capital;
+    
     private Long population;	  // Extract "population"
     
     @ManyToOne
     @JoinColumn(name = "region_id")
     private Region region;        // Extract "region"
     
-    @ElementCollection
-    private List<String> languages; // List of languages as Strings
+    @Column(length = 255)
+    private String languages;     // Store as comma-separated string
 
-    @ElementCollection
-    private List<String> currencies; // List of currencies as Strings
+    @Column(length = 255)
+    private String currencies; 
     
     public Country() {}
 
-	public Country(Long id, String name, String officialName, String capital, Long population, Region region,
-			List<String> languages, List<String> currencies) {
-		this.id = id;
-		this.name = name;
-		this.officialName = officialName;
-		this.capital = capital;
-		this.population = population;
-		this.region = region;
-		this.languages = languages;
-		this.currencies = currencies;
-	}
+    public Country(Long id, String name, String officialName, String capital, Long population, Region region,
+            List<String> languages, List<String> currencies) {
+		 this.id = id;
+		 this.name = name;
+		 this.officialName = officialName;
+		 this.capital = capital != null ? String.join(", ", capital) : null;
+		 this.population = population;
+		 this.region = region;
+		 this.languages = languages != null ? String.join(", ", languages) : null;
+		 this.currencies = currencies != null ? String.join(", ", currencies) : null;
+}
 
 	public Long getId() {
 		return id;
@@ -69,12 +73,13 @@ public class Country {
 		this.officialName = officialName;
 	}
 
-	public String getCapital() {
-		return capital;
+	public void setCapital(List<String> capitals) {
+	        this.capital = (capitals != null && !capitals.isEmpty()) ? String.join(", ", capitals) : null;
 	}
 
-	public void setCapital(String capital) {
-		this.capital = capital;
+	    // Convert from String to List<String>
+	public List<String> getCapital() {
+	        return capital != null ? List.of(capital.split(", ")) : null;
 	}
 
 	public Long getPopulation() {
@@ -93,21 +98,19 @@ public class Country {
 		this.region = region;
 	}
 
-	public List<String> getLanguages() {
-		return languages;
-	}
+	 public List<String> getLanguages() {
+	    return languages != null ? List.of(languages.split(", ")) : null;
+	 }
+	 
+	 public void setLanguages(List<String> languages) {
+	    this.languages = languages != null ? String.join(", ", languages) : null;
+	 }
 
-	public void setLanguages(List<String> languages) {
-		this.languages = languages;
-	}
-
-	public List<String> getCurrencies() {
-		return currencies;
-	}
-
-	public void setCurrencies(List<String> currencies) {
-		this.currencies = currencies;
-	}
-
+	 public List<String> getCurrencies() {
+	     return currencies != null ? List.of(currencies.split(", ")) : null;
+	 }
+	 public void setCurrencies(List<String> currencies) {
+	     this.currencies = currencies != null ? String.join(", ", currencies) : null;
+	 }
     
 }
