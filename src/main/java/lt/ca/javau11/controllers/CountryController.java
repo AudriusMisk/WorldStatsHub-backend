@@ -27,6 +27,32 @@ public class CountryController {
     public List<Country> getAllCountries() {
         return countryRepository.findAll();
     }
+    
+    @PostMapping
+    public Country addCountry(@RequestBody Country country) {
+        return countryRepository.save(country);
+    }
+    
+    @PutMapping("/{id}")
+    public Country updateCountry(@PathVariable Long id, @RequestBody Country updatedCountry) {
+        return countryRepository.findById(id)
+            .map(country -> {
+                country.setName(updatedCountry.getName());
+                country.setOfficialName(updatedCountry.getOfficialName());
+                country.setCapital(updatedCountry.getCapital());
+                country.setPopulation(updatedCountry.getPopulation());
+                country.setLanguages(updatedCountry.getLanguages());
+                country.setCurrencies(updatedCountry.getCurrencies());
+                return countryRepository.save(country);
+            })
+            .orElse(null);
+    }
+
+    // Delete
+    @DeleteMapping("/{id}")
+    public void deleteCountry(@PathVariable Long id) {
+        countryRepository.deleteById(id);
+    }
 }
 
 
