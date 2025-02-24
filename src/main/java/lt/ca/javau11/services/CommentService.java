@@ -19,14 +19,13 @@ public class CommentService {
 
     public List<Comment> getCommentsByCountry(Long countryId) {
         Country country = new Country();
-        country.setId(countryId); // Or fetch from repository
+        country.setId(countryId);
         return commentRepository.findByCountry(country);
     }
 
     public Comment addComment(Long userId, Long countryId, String content) {
         Comment comment = new Comment();
-        comment.setUser(new User(userId, content, content, null, null)); // Fetch user from repository
-        //comment.setCountry(new Country(countryId, content, content, content, countryId, null, null, null)); // Fetch country from repository
+        comment.setUser(new User(userId, content, content, null, null));
         comment.setContent(content);
         comment.setTimestamp(LocalDateTime.now());
         return commentRepository.save(comment);

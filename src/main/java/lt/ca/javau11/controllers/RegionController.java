@@ -11,7 +11,7 @@ import lt.ca.javau11.repositories.RegionRepository;
 
 @RestController
 @RequestMapping("/api/regions")
-@CrossOrigin(origins = "http://localhost:3000")  // Allow requests from React app
+@CrossOrigin(origins = "http://localhost:3000")
 public class RegionController {
 
     private final RegionRepository regionRepository;
@@ -42,21 +42,3 @@ public class RegionController {
         }
     }
 }
-
-//@RestController
-//@RequestMapping("/regions")
-//public class RegionController {
-//
-//    @Autowired
-//    private RegionService regionService;
-//
-//    @GetMapping
-//    public List<Region> getAllRegions() {
-//        return regionService.getAllRegions();
-//    }
-//
-//    @GetMapping("/{id}")
-//    public Region getRegionById(@PathVariable Long id) {
-//        return regionService.getRegionById(id);
-//    }
-//}

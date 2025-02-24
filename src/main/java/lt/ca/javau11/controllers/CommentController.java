@@ -19,9 +19,4 @@ public class CommentController {
     public List<Comment> getCommentsByCountry(@PathVariable Long countryId) {
         return commentService.getCommentsByCountry(countryId);
     }
-
-//    @PostMapping
-//    public Comment addComment(@RequestBody CommentDto commentDto) {
-//        return commentService.addComment(commentDto.getUserId(), commentDto.getCountryId(), commentDto.getContent());
-//    }
 }

@@ -3,6 +3,7 @@ package lt.ca.javau11.entities;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -14,22 +15,23 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;          // Extract "name.common"
     private String officialName;  // Extract "name.official"
     
-    @Column(name = "capital", columnDefinition = "TEXT")
-    private String capital;
-    
+    @Column(nullable = true, length = 255)
+    private String capital;   
     private Long population;	  // Extract "population"
     
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "region_id")
+    @JoinColumn(name = "region_id", nullable=true)
     private Region region;        // Extract "region"
     
     @Column(length = 255)
@@ -45,7 +47,7 @@ public class Country {
 		 this.id = id;
 		 this.name = name;
 		 this.officialName = officialName;
-		 this.capital = capital != null ? String.join(", ", capital) : null;
+		 this.capital = capital;
 		 this.population = population;
 		 this.region = region;
 		 this.languages = languages != null ? String.join(", ", languages) : null;
@@ -80,7 +82,6 @@ public class Country {
 	        this.capital = (capitals != null && !capitals.isEmpty()) ? String.join(", ", capitals) : null;
 	}
 
-	    // Convert from String to List<String>
 	public List<String> getCapital() {
 	        return capital != null ? List.of(capital.split(", ")) : null;
 	}

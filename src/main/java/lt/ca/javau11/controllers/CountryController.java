@@ -9,7 +9,7 @@ import lt.ca.javau11.repositories.CountryRepository;
 
 @RestController
 @RequestMapping("/api/countries")
-@CrossOrigin(origins = "http://localhost:3000")  // Allow requests from React app
+@CrossOrigin(origins = "http://localhost:3000")
 public class CountryController {
 
     private final CountryRepository countryRepository;
@@ -48,28 +48,8 @@ public class CountryController {
             .orElse(null);
     }
 
-    // Delete
     @DeleteMapping("/{id}")
     public void deleteCountry(@PathVariable Long id) {
         countryRepository.deleteById(id);
     }
 }
-
-
-//@RestController
-//@RequestMapping("/countries")
-//public class CountryController {
-//
-//    @Autowired
-//    private CountryService countryService;
-//
-//    @GetMapping("/region/{regionId}")
-//    public List<Country> getCountriesByRegion(@PathVariable Long regionId) {
-//        return countryService.getCountriesByRegion(regionId);
-//    }
-//
-//    @GetMapping("/{id}")
-//    public Country getCountryById(@PathVariable Long id) {
-//        return countryService.getCountryById(id);
-//    }
-//}

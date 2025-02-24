@@ -24,7 +24,6 @@ public class CountryDTO {
     }
 
     public String getFlagUrl() {
-        // Safeguard: Check if 'flags' map and the "png" key exist
         return (flags != null && flags.containsKey("png")) ? flags.get("png") : null;
     }
 
@@ -41,12 +40,10 @@ public class CountryDTO {
     }
 
     public List<String> getLanguages() {
-        // Convert language map values to List if not null
         return languages != null ? List.copyOf(languages.values()) : null;
     }
 
     public List<String> getCurrencies() {
-        // Convert currency map keys to List if not null
         return currencies != null ? currencies.keySet().stream().toList() : null;
     }
 }

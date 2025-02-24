@@ -18,7 +18,7 @@ public class CountryApiProjectApplication {
 	@Bean
 	CommandLineRunner run(RestCountriesService restCountriesService, CountryRepository countryRepository) {
 	    return args -> {
-	        if (countryRepository.count() == 0) { // Checks if database is empty
+	        if (countryRepository.count() == 0) {
 	            restCountriesService.fetchAndSaveCountries();
 	        }
 	    };
